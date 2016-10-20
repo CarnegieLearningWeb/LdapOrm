@@ -126,6 +126,8 @@ class Client implements ClientInterface
      */
     public function getLdapResource()
     {
+        $this->connect();
+
         return $this->ldapResource;
     }
 
