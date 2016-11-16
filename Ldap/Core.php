@@ -33,7 +33,7 @@ class Core
      */
     public function bind($linkIdentifier, $bindRdn = null, $bindPassword = null)
     {
-        return ldap_bind($linkIdentifier, $bindRdn, $bindPassword);
+        return @ldap_bind($linkIdentifier, $bindRdn, $bindPassword);
     }
 
     /**
