@@ -98,7 +98,6 @@ class LdapEntityManager
         $this->logger = $logger;
         $this->reader = $reader;
         $this->client = $client;
-        $this->client->connect();
     }
 
     /**
@@ -394,9 +393,6 @@ class LdapEntityManager
      */
     public function deleteByDn($dn, $recursive=false)
     {
-        // Connect if needed
-        $this->connect();
-
         $this->logger->info('Delete (recursive=' . $recursive . ') in LDAP: ' . $dn );
 
         if($recursive == false) {
@@ -475,9 +471,6 @@ class LdapEntityManager
      */
     private function ldapPersist($dn, Array $arrayInstance)
     {
-        // Connect if needed
-        $this->connect();
-        
         list($toInsert,) = $this->splitArrayForUpdate($arrayInstance);
 
         $this->logger->info("Insert $dn in LDAP : " . json_encode($toInsert));
@@ -521,7 +514,7 @@ class LdapEntityManager
         }
         return array(array_merge($toModify), array_merge($toDelete)); // array_merge is to re-index gaps in keys
     }
-    
+
     /**
      * Update an object in ldap with array
      *
@@ -530,9 +523,6 @@ class LdapEntityManager
      */
     private function ldapUpdate($dn, Array $entry, $entity)
     {
-        // Connect if needed
-        $this->connect();
-
         list($toModify, $toDelete) = $this->splitArrayForUpdate($entry, $entity);
 
         // Do not attempt to modify operational attributes
